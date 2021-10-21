@@ -1,6 +1,6 @@
 const address = process.argv[2]
 const port = process.argv[3]
-const { stdout, send } = require('process');
+const { stdout, send, exit } = require('process');
 var readline = require('readline');
 let array = []
 let instanceUser = ''
@@ -69,8 +69,24 @@ socket.on('game started', function(user){
 })
 
 socket.on('data', function(data, sender){
+    // console.log(sender)
+    if(data === "r"){
+        let playerown
+        if(sender == "first"){
+            playerown = "second"
+        }
+        if(sender == "second"){
+            playerown = "first"
+        }
+        console.log(sender + " player quit. "+ playerown +" player own the game")
+        process.exit()
+    }
     array = data
     arrayPrint(data)
+    if(data.indexOf(0)==-1) {
+        console.log("Game is tied")
+        process.exit()
+    }
     if(sender !== undefined && instanceUser != sender){
     process.stdout.write(">")
     }
@@ -81,6 +97,11 @@ socket.on('data', function(data, sender){
     }
 })
 process.stdin.on("data", data => { 
+    // console.log(input)
+    if(data.toString().trim() == "r"){
+        socket.emit('data', "r", instanceUser)
+        return
+    }
     let input = parseInt(data.toString().trim())
     if(array[input-1] != 0){
         process.stdout.write("Invalid input")
@@ -93,7 +114,7 @@ process.stdin.on("data", data => {
     if(instanceUser == "second"){
         array[input-1] = "O"
     }
-    socket.emit('data', array,instanceUser)
+    socket.emit('data', array, instanceUser)
     }
     
 }); 

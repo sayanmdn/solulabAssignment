@@ -28,6 +28,8 @@ io.on('connection', function (socket){
       io.emit('data',data,user)
     })
     socket.on('disconnect', function(socket){
+      if(users.length == 1) users.pop()
+      console.log(...io.sockets.sockets.keys())
       let index = users.indexOf(...io.sockets.sockets.keys())
       if (index > -1) {
           users.splice(index, 1);
