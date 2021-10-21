@@ -1,11 +1,14 @@
 # solulabAssignment
 
-### USE
-# for server
+## install node modules
+```
+npm install
+```
+## for server
 ```
 node server.js 5050
 ```
-# for client
+## for client
 ```
 node client.js 127.0.0.1 5050
 ```
