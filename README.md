@@ -1,5 +1,14 @@
 # solulabAssignment
 
+### USE
+# for server
+```
+node server.js 5050
+```
+# for client
+```
+node client.js 127.0.0.1 5050
+```
 
 problem statement:
 Make sure you read the whole document carefully and follow the guidelines in it.
